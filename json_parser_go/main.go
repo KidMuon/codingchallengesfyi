@@ -1,11 +1,9 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"os"
-	"unicode"
 )
 
 func main() {
@@ -55,36 +53,6 @@ func main() {
 
 	fmt.Println("Valid JSON!")
 	os.Exit(0)
-}
-
-func skip_whitespace(contents string) string {
-	skip_start_index := 0
-	for _, r := range contents {
-		if unicode.IsSpace(r) {
-			skip_start_index++
-		} else {
-			break
-		}
-	}
-
-	returning_contents := contents[skip_start_index:]
-	return returning_contents
-}
-
-func object_find(contents string) (string, error) {
-	contents = skip_whitespace(contents)
-	if len(contents) == 0 || contents[0] != '{' {
-		return "", errors.New("invalid object")
-	}
-	contents = contents[1:]
-	//look for keys
-	contents = skip_whitespace(contents)
-	if len(contents) == 0 || contents[0] != '}' {
-		return "", errors.New("invalid object")
-	}
-	contents = contents[1:]
-
-	return contents, nil
 }
 
 //object
