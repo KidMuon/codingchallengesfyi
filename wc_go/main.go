@@ -36,11 +36,11 @@ func main() {
 	if len(files) > 0 {
 		for _, file := range files {
 			f, err := os.Open(file)
+			defer f.Close()
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "file error: %v\n", err)
 				os.Exit(1)
 			}
-			defer f.Close()
 
 			output := toolOutput{
 				flagOutputs: make([]int, len(flags)),
