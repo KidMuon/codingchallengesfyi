@@ -55,9 +55,6 @@ func main() {
 	os.Exit(0)
 }
 
-//object
-//key
-//string
 //boolean
 //number
 //null
