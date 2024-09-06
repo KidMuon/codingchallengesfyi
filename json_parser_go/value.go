@@ -28,22 +28,8 @@ func value_find(contents string) (string, error) {
 		break
 	}
 	if err != nil {
-		return "", err
+		return contents, err
 	}
-	return contents, nil
-}
-
-func string_find(contents string) (string, error) {
-	var err error
-	contents, err = skip_next_expected(contents, "\"")
-	if err != nil {
-		return "", errors.New("invalid value")
-	}
-	contents, err = skip_next_expected(contents, "\"")
-	if err != nil {
-		return "", errors.New("invalid value")
-	}
-
 	return contents, nil
 }
 
@@ -52,13 +38,13 @@ func bool_find(contents string) (string, error) {
 	if test_if_next(contents, "true") {
 		contents, err = skip_next_expected(contents, "true")
 		if err != nil {
-			return "", errors.New("invalid boolean")
+			return contents, errors.New("invalid boolean")
 		}
 		return contents, nil
 	}
 	contents, err = skip_next_expected(contents, "false")
 	if err != nil {
-		return "", errors.New("invalid boolean")
+		return contents, errors.New("invalid boolean")
 	}
 	return contents, nil
 }
@@ -67,7 +53,7 @@ func null_find(contents string) (string, error) {
 	var err error
 	contents, err = skip_next_expected(contents, "null")
 	if err != nil {
-		return "", errors.New("invalid null")
+		return contents, errors.New("invalid null")
 	}
 	return contents, nil
 }

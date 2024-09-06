@@ -18,7 +18,7 @@ func test_if_next(contents string, test_str string) bool {
 func skip_next_expected(contents string, expected string) (string, error) {
 	_, after, found := strings.Cut(contents, expected)
 	if !found {
-		return "", errors.New("expected not found")
+		return contents, errors.New("expected not found")
 	}
 	return after, nil
 }

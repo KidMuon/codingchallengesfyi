@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -16,6 +17,20 @@ func main() {
 	}
 
 	filename := os.Args[1]
+	filecontent := getFileContent(filename)
+	//fmt.Println("File content\n", filecontent)
+
+	err := testJSONfile(filecontent)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s invalid JSON: %v\n", filename, err)
+		os.Exit(1)
+	}
+
+	fmt.Fprintf(os.Stdout, "%s valid JSON\n", filename)
+	os.Exit(0)
+}
+
+func getFileContent(filename string) string {
 	f, err := os.Open(filename)
 	defer f.Close()
 	if err != nil {
@@ -43,19 +58,22 @@ func main() {
 
 	filecontent := string(filebytes)
 
-	fmt.Println("File content\n", filecontent)
-
-	_, err = object_find(filecontent)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "invalid json: %v\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Println("Valid JSON!")
-	os.Exit(0)
+	return filecontent
 }
 
-//boolean
-//number
-//null
-//array
+func testJSONfile(filecontent string) error {
+	var err error
+	var remainder string
+
+	if test_if_next(filecontent, "{") {
+		remainder, err = object_find(filecontent)
+	} else {
+		remainder, err = array_find(filecontent)
+	}
+	fmt.Println(remainder)
+	remainder = skip_whitespace(remainder)
+	if err == nil && len(remainder) != 0 {
+		err = errors.New("extra information in file")
+	}
+	return err
+}
