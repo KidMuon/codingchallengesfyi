@@ -1,6 +1,8 @@
 package main
 
-import "errors"
+import (
+	"errors"
+)
 
 func key_find(contents string) (string, error) {
 	var err error
@@ -31,7 +33,10 @@ func key_find(contents string) (string, error) {
 	}
 
 	if test_if_next(contents, ",") {
-		contents, _ = skip_next_expected(contents, ",")
+		contents, err = skip_next_expected(contents, ",")
+		if err != nil {
+			return "", err
+		}
 		return key_find(contents)
 	}
 

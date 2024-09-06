@@ -22,5 +22,10 @@ func object_find(contents string) (string, error) {
 		}
 	}
 
+	contents, err = skip_next_expected(contents, "}")
+	if err != nil {
+		return "", errors.New("invalid object")
+	}
+
 	return contents, nil
 }

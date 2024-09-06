@@ -20,6 +20,12 @@ func value_find(contents string) (string, error) {
 	case test_if_number_next(contents):
 		contents, err = number_find(contents)
 		break
+	case test_if_next(contents, "{"):
+		contents, err = object_find(contents)
+		break
+	case test_if_next(contents, "["):
+		contents, err = array_find(contents)
+		break
 	}
 	if err != nil {
 		return "", err
