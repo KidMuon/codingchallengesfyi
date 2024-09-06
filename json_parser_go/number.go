@@ -8,54 +8,15 @@ import (
 
 func test_if_number_next(contents string) bool {
 	contents = skip_whitespace(contents)
-	var decimal bool = false
-	var exponent bool = false
 
-	for i, r := range contents {
-		if strings.ContainsRune("0", r) {
-			if decimal || rune(contents[i+1]) == '.' {
-				continue
-			} else if exponent || strings.ContainsRune("Ee", rune(contents[i+1])) {
-				continue
-			} else if i != 0 && contents[i-1] != '-' {
-				continue
-			} else if i == 0 && !strings.ContainsRune("0123456789Ee.", rune(contents[i+1])) {
-				continue
-			} else {
-				return false
-			}
-		} else if strings.ContainsRune("123456789", r) {
-			continue
-		} else if strings.ContainsRune(".", r) {
-			if !decimal {
-				decimal = true
-			} else {
-				return false
-			}
-		} else if strings.ContainsRune("Ee", r) {
-			if !exponent {
-				exponent = true
-			} else {
-				return false
-			}
-		} else if strings.ContainsRune("-", r) {
-			if i == 0 || strings.ContainsRune("Ee", rune(contents[i-1])) {
-				continue
-			} else {
-				return false
-			}
-		} else if strings.ContainsRune("+", r) {
-			if i != 0 && strings.ContainsRune("Ee", rune(contents[i-1])) {
-				continue
-			} else {
-				return false
-			}
-		} else {
-			if i == 0 {
-				return false
-			}
-			break
-		}
+	potential_number_string := strings.Split(contents, ",")[0]
+	potential_number_string = strings.Split(potential_number_string, "]")[0]
+	potential_number_string = strings.Split(potential_number_string, "}")[0]
+	potential_number_string = skip_whitespace(potential_number_string)
+
+	_, err := strconv.ParseFloat(potential_number_string, 64)
+	if err != nil {
+		return false
 	}
 
 	return true

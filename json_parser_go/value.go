@@ -7,6 +7,7 @@ import (
 func value_find(contents string) (string, error) {
 	var err error
 	err = errors.New("unknown value type")
+	contents = skip_whitespace(contents)
 	switch {
 	case test_if_next(contents, "\""):
 		contents, err = string_find(contents)
