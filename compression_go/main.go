@@ -16,7 +16,20 @@ func main() {
 		fmt.Fprintf(os.Stderr, "%v", err)
 		os.Exit(1)
 	}
-	fmt.Println(countOccurences(fileContents))
+	lettersInFile := countOccurences(fileContents)
+
+	fmt.Println(lettersInFile)
+
+	listOfNodes := []huffmanNode{}
+	for letter, count := range lettersInFile {
+		newNode := huffmanNode{
+			weight: count,
+			value:  letter,
+		}
+		listOfNodes = append(listOfNodes, newNode)
+	}
+	fmt.Println(buildTree(listOfNodes))
+
 	os.Exit(0)
 }
 
