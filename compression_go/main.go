@@ -28,7 +28,10 @@ func main() {
 		}
 		listOfNodes = append(listOfNodes, newNode)
 	}
-	fmt.Println(buildTree(listOfNodes))
+	fileTree := buildTree(listOfNodes)
+	fmt.Println(fileTree)
+
+	fmt.Println(makeEncodingStrings(fileTree))
 
 	os.Exit(0)
 }
@@ -45,18 +48,4 @@ func importFile(fileName string) (string, error) {
 	}
 
 	return string(res), nil
-}
-
-type occurenceCount map[string]int
-
-func countOccurences(contents string) occurenceCount {
-	occurences := make(occurenceCount)
-	for _, r := range contents {
-		if _, ok := occurences[string(r)]; ok {
-			occurences[string(r)]++
-		} else {
-			occurences[string(r)] = 1
-		}
-	}
-	return occurences
 }

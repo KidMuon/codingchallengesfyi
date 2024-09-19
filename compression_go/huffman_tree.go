@@ -86,9 +86,11 @@ func mergeObjects(leftList []huffmanObject, rightList []huffmanObject) []huffman
 }
 
 func buildTree(listOfNodes []huffmanNode) huffmanTree {
+
 	if len(listOfNodes) < 2 {
 		return huffmanTree{}
 	}
+
 	remainingObjects := []huffmanObject{}
 	for _, node := range listOfNodes {
 		remainingObjects = append(remainingObjects, node)
@@ -102,5 +104,6 @@ func buildTree(listOfNodes []huffmanNode) huffmanTree {
 		remainingObjects = append(leftoverObjects, treeOfFirstTwo)
 		remainingObjects = sortObjects(remainingObjects)
 	}
+
 	return combineToTree(remainingObjects[0], remainingObjects[1])
 }
