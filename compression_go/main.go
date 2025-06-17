@@ -18,8 +18,6 @@ func main() {
 	}
 	lettersInFile := countOccurences(fileContents)
 
-	fmt.Println(lettersInFile)
-
 	listOfNodes := []huffmanNode{}
 	for letter, count := range lettersInFile {
 		newNode := huffmanNode{
@@ -29,9 +27,12 @@ func main() {
 		listOfNodes = append(listOfNodes, newNode)
 	}
 	fileTree := buildTree(listOfNodes)
-	fmt.Println(fileTree)
 
-	fmt.Println(makeEncodingStrings(fileTree))
+	encodings := makeEncodingStrings(fileTree)
+	for value, prefix := range encodings {
+		fmt.Printf("%x:%s ", value, prefix)
+	}
+	fmt.Println()
 
 	os.Exit(0)
 }
