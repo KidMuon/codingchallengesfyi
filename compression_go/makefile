@@ -1,6 +1,6 @@
 run:
-	go build
-	./compression_go testfiles/tree_test.txt
+	go build -o bin/compression_go
+	bin/compression_go testfiles/tree_test.txt
 
 build:
 	go build
